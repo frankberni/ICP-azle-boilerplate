@@ -7,13 +7,14 @@ type Comment = record {
   quoteId : text;
   comment : text;
 };
-type CommentsToDisplay = record { author : text; comment : text };
-type NewCommentPayload = record {
+type CommentPayload = record {
   authorId : text;
+  authorName : text;
   quoteId : text;
   comment : text;
 };
-type NewQuotePayload = record { authorId : text; quote : text };
+type CommentsToDisplay = record { author : text; comment : text };
+type NewQuotePayload = record { authorId : text; quote : text; author : text };
 type NewUserPayload = record { name : text; pinCode : text };
 type Quote = record {
   id : text;
@@ -37,10 +38,10 @@ type _AzleResult_2 = variant { Ok : User; Err : text };
 type _AzleResult_3 = variant { Ok : vec QuoteToDisplay; Err : text };
 type _AzleResult_4 = variant { Ok : vec CommentsToDisplay; Err : text };
 service : () -> {
-  addComment : (NewCommentPayload) -> (_AzleResult);
+  addComment : (CommentPayload) -> (_AzleResult);
   deleteComment : (text, text, text) -> (_AzleResult);
   deleteQuote : (text, text) -> (_AzleResult_1);
-  deleteUser : (text, text) -> (_AzleResult_2);
+  deleteUser : (text) -> (_AzleResult_2);
   getAllQuotes : () -> (_AzleResult_3) query;
   getMyUserData : (NewUserPayload) -> (_AzleResult_2) query;
   getQuoteComments : (text) -> (_AzleResult_4) query;
